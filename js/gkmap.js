@@ -12,11 +12,16 @@ function initmap() {
   var osmAttrib='Map data © <a href="http://openstreetmap.org">OpenStreetMap</a> contributors';
   var osm = new L.TileLayer(osmUrl, {attribution: osmAttrib});   
 
+  // for all possible values and explanations see "Template Parameters" in https://msdn.microsoft.com/en-us/library/ff701716.aspx
+  var imagerySet = "Aerial"; // AerialWithLabels | Birdseye | BirdseyeWithLabels | Road
+  var bing = new L.BingLayer("LfO3DMI9S6GnXD7d0WGs~bq2DRVkmIAzSOFdodzZLvw~Arx8dclDxmZA0Y38tHIJlJfnMbGq5GXeYmrGOUIbS2VLFzRKCK0Yv_bAl6oe-DOc", {type: imagerySet});
+
   map.addLayer(osm);
+  map.addControl(new L.Control.Layers({'OSM':osm, "Bing":bing}));
+
   // start the map at Paris
   map.setView(new L.LatLng(43.5943, 6.9509), 8);
-
-  //map.locate({setView: true, maxZoom: 16});
+  map.locate({setView: true, maxZoom: 16});
 }
 
 function onEachFeature(feature, layer) {
