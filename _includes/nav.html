@@ -1,0 +1,44 @@
+<nav class="navbar navbar-default" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="{{ HOME_PATH }}">{{ site.title }}</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        {% for dale in site.data.nav %}
+          <!-- check to see if the data file has a submenu, and if so display it -->
+          {% if dale.subcategories != null %}
+            <li class="dropdown">
+              <a href="{{ dale.url }}" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+                {% if dale.glyph != null %}<span class="{{ dale.glyph }}"></span> {% endif %}
+                {{ dale.title }}<span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                {% for subcategory in dale.subcategories %}
+                <li>
+                  <a href="{{ subcategory.subhref }}">
+                    {% if subcategory.glyph != null %}<span class="{{ subcategory.glyph }}"></span> {% endif %}
+                    {% if subcategory.icon != null %}<img src="{{ subcategory.icon }}" width="30px" />{% endif %}
+                    {{ subcategory.subtitle }}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+          {% else %}
+            <!-- display the top level navigation for items that don’t have a submenu -->
+            <li class="{% if dale.active != null %}{{ dale.active }}{% endif %}">
+            <a href="{{ dale.href }}">{% if dale.glyph != null %}<span class="{{ dale.glyph }}"></span> {% endif %}{{ dale.title }}</a>
+          {% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container -->
+</nav>

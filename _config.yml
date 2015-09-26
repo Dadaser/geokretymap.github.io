@@ -4,8 +4,27 @@ email: contact@geokretymap.org
 description: >
   World Map of GeoKrety, and tutorials on how to log GeoKrety.
 baseurl: "" # the subpath of your site, e.g. /blog/
-url: "http://geokretymap.org" # the base hostname & protocol for your site
+url: "http://127.0.0.1:4000" # the base hostname & protocol for your site
+#url: "http://geokretymap.org" # the base hostname & protocol for your site
 github_username:  GeoKretyMap
 
 # Build settings
 markdown: kramdown
+
+
+navigation:
+- root: Root Menu Text
+  url: /link.html
+  icon: icon-you-want
+
+- root: Root Menu Text 1
+  url: #
+  icon: icon-you-want-1
+  first-level:
+    - text: First Level 1
+      url: first-level-link.html
+      second-level:
+        - text: Second Level
+          url: second-level-link.html
+    - text: First Level 2
+      url: first-level-2.html
