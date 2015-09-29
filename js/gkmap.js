@@ -1,6 +1,7 @@
 var map;
 var geoJsonLayer;
 var markers = L.markerClusterGroup({maxClusterRadius: 40});
+var geokretyfilter = new L.control.geokretyfilter({"data": undefined}, undefined);
 
 
 function initmap() {
@@ -19,6 +20,9 @@ function initmap() {
   map.addLayer(osm);
   map.addControl(new L.Control.Layers({'OSM':osm, "Bing":bing}));
 
+  // Filter plugin
+  map.addControl(geokretyfilter);
+
   // start the map at Paris
   map.setView(new L.LatLng(43.5943, 6.9509), 8);
   map.locate({setView: true, maxZoom: 16});
@@ -33,7 +37,19 @@ function onEachFeature(feature, layer) {
 
 function retrieve() {
   var bounds = map.getBounds();
-  var url="//api.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json";
+  var filter="";
+  if (geokretyfilter.gkrecentinput.checked) {
+     filter += "&"+geokretyfilter.gkrecentinput.value
+  }
+  if (geokretyfilter.gkoldinput.checked) {
+     filter += "&"+geokretyfilter.gkoldinput.value
+  }
+  if (!geokretyfilter.gkghostsinput.checked) {
+     filter += "&"+geokretyfilter.gkghostsinput.value
+  }
+window.console.log(filter);
+  var url="//api.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1"+filter;
+  //var url="//api.dev.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1&"+filter;
 
   jQuery.ajax({
     dataType: "json",
