@@ -3,6 +3,31 @@
 }
 
 /**
+ * Site
+ */
+
+.page-content {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.page-content img {
+  margin: 5px;
+}
+
+#view_map_button {
+  display: table-cell;
+  vertical-align: middle;
+}
+
+#view_map_button p {
+  margin: 10px;
+}
+#view_map_button a {
+  color: white;
+}
+
+/**
  * Icons
  */
 .icon > svg {

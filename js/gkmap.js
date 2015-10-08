@@ -23,6 +23,9 @@ function initmap() {
   // Filter plugin
   map.addControl(geokretyfilter);
 
+  // Fullscreen plugin
+  map.addControl(L.control.fullscreen());
+
   // start the map at Paris
   map.setView(new L.LatLng(43.5943, 6.9509), 8);
   map.locate({setView: true, maxZoom: 16});

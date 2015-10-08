@@ -4,10 +4,9 @@ title: What are GeoKrety?
 permalink: /
 ---
 
-<div type="button" class="btn btn-success pull-right btn-lg">
+<div id="view_map_button" type="button" class="btn btn-success pull-right btn-lg">
   <p>
     <a href="/geokrety-world-map/">View the Map</a>
-    <a href="/geokrety-world-map/"><span class="glyphicon glyphicon-fullscreen"></span></a>
   </p>
 </div>
 
