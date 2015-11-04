@@ -1,6 +1,6 @@
 var map;
 var geoJsonLayer;
-var markers = L.markerClusterGroup({maxClusterRadius: 40, disableClusteringAtZoom: 10});
+var markers = L.markerClusterGroup({maxClusterRadius: 40, disableClusteringAtZoom: 8});
 var geokretyfilter = new L.control.geokretyfilter({"data": undefined}, undefined);
 
 
@@ -31,38 +31,76 @@ function initmap() {
   map.locate({setView: true, maxZoom: 16});
 }
 
-function onEachFeature(feature, layer) {
-    // does this feature have a property named popupContent?
-    if (feature.properties && feature.properties.popupContent) {
-        layer.bindPopup(feature.properties.popupContent);
+
+var blueIcon = new L.Icon({
+  iconSize: [25, 40],
+  iconAnchor: [12, 40],
+  popupAnchor:  [1, -24],
+  iconUrl: '/js/images/marker-icon.png',
+  shadowUrl: '/js/images/marker-shadow.png'
+});
+
+var redIcon = new L.Icon({
+  iconSize: [25, 40],
+  iconAnchor: [12, 40],
+  popupAnchor:  [1, -24],
+  iconUrl: '/js/images/marker-icon-red.png',
+  shadowUrl: '/js/images/marker-shadow.png'
+});
+
+var greyIcon = new L.Icon({
+  iconSize: [25, 40],
+  iconAnchor: [12, 40],
+  popupAnchor:  [1, -24],
+  iconUrl: '/js/images/marker-icon-grey.png',
+  shadowUrl: '/js/images/marker-shadow.png'
+});
+
+function pointToLayer(feature, latlng) {
+  if (feature.properties && feature.properties.age) {
+    if (feature.properties.age == 99999) {
+      return L.marker(latlng, { icon: greyIcon });
+    } else if (feature.properties.age > 90) {
+      return L.marker(latlng, { icon: redIcon });
+    } else {
+      return L.marker(latlng, { icon: blueIcon });
     }
+  }
+  return L.marker(latlng, { icon: greyIcon });
+}
+
+function onEachFeature(feature, layer) {
+  // does this feature have a property named popupContent?
+  if (feature.properties && feature.properties.popupContent) {
+    layer.bindPopup(feature.properties.popupContent);
+  }
 }
 
 function retrieve() {
   var bounds = map.getBounds();
   var filter="";
   if (geokretyfilter.gkrecentinput.checked) {
-     filter += "&"+geokretyfilter.gkrecentinput.value
+    filter += "&"+geokretyfilter.gkrecentinput.value
   }
   if (geokretyfilter.gkoldinput.checked) {
-     filter += "&"+geokretyfilter.gkoldinput.value
+    filter += "&"+geokretyfilter.gkoldinput.value
   }
   if (!geokretyfilter.gkghostsinput.checked) {
-     filter += "&"+geokretyfilter.gkghostsinput.value
+    filter += "&"+geokretyfilter.gkghostsinput.value
   }
-window.console.log(filter);
+
   var url="//api.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1"+filter;
-  //var url="//api.dev.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1&"+filter;
 
   jQuery.ajax({
     dataType: "json",
     url: url,
-    success: function(geojsonFeature){
+    success: function(data){
       if (geoJsonLayer != undefined) {
-            markers.removeLayer(geoJsonLayer);
+        markers.removeLayer(geoJsonLayer);
       }
-      geoJsonLayer = L.geoJson(geojsonFeature, {
-        onEachFeature: onEachFeature
+      geoJsonLayer = L.geoJson(data, {
+        pointToLayer: pointToLayer,
+        onEachFeature: onEachFeature,
       });
       markers.addLayer(geoJsonLayer);
       map.addLayer(markers);
