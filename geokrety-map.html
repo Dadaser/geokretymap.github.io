@@ -7,3 +7,14 @@ map-engine: leaflet
 
 <div id="map"></div>
 <script src="/js/gkmap.js"></script>
+
+<dl id="map-legend">
+    <dt><img src="/js/images/marker-icon.png"><span id="map-legend-blue">0</span></dt>
+    <dd>Has moved since 90 days</dd>
+
+    <dt><img src="/js/images/marker-icon-red.png"><span id="map-legend-red">0</span></dt>
+    <dd>Has a known move date and hasn't moved since 90 days</dd>
+
+    <dt><img src="/js/images/marker-icon-grey.png"><span id="map-legend-grey">0</span></dt>
+    <dd>No known move date</dd>
+</dl>

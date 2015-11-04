@@ -3,6 +3,10 @@ var geoJsonLayer;
 var markers = L.markerClusterGroup({maxClusterRadius: 40, disableClusteringAtZoom: 8});
 var geokretyfilter = new L.control.geokretyfilter({"data": undefined}, undefined);
 
+var blue = 0;
+var red = 1;
+var grey = 2;
+var markersCounter = [0, 0, 0];
 
 function initmap() {
   // set up the map
@@ -59,14 +63,25 @@ var greyIcon = new L.Icon({
 function pointToLayer(feature, latlng) {
   if (feature.properties && feature.properties.age) {
     if (feature.properties.age == 99999) {
+      markersCounter[grey] += 1;
       return L.marker(latlng, { icon: greyIcon });
     } else if (feature.properties.age > 90) {
+      markersCounter[red] += 1;
       return L.marker(latlng, { icon: redIcon });
     } else {
+      markersCounter[blue] += 1;
       return L.marker(latlng, { icon: blueIcon });
     }
   }
+  markersCounter[grey] += 1;
   return L.marker(latlng, { icon: greyIcon });
+}
+
+function updateCounters() {
+  $("#map-legend-blue").html(markersCounter[blue]);
+  $("#map-legend-red").html(markersCounter[red]);
+  $("#map-legend-grey").html(markersCounter[grey]);
+  markersCounter = [0, 0, 0];
 }
 
 function onEachFeature(feature, layer) {
@@ -102,6 +117,7 @@ function retrieve() {
         pointToLayer: pointToLayer,
         onEachFeature: onEachFeature,
       });
+      updateCounters();
       markers.addLayer(geoJsonLayer);
       map.addLayer(markers);
     },
