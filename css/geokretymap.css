@@ -44,6 +44,10 @@
   font-size: 16px;
 }
 
+.leaflet-popup-content > h1.missing {
+  text-decoration: line-through;
+}
+
 .leaflet-popup-content > img {
   display: block;
   border-radius: 12px;

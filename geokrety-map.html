@@ -8,13 +8,22 @@ map-engine: leaflet
 <div id="map"></div>
 <script src="/js/gkmap.js"></script>
 
-<dl id="map-legend">
-    <dt><img src="/js/images/marker-icon.png"><span id="map-legend-blue">0</span></dt>
-    <dd>Has moved since 90 days</dd>
-
-    <dt><img src="/js/images/marker-icon-red.png"><span id="map-legend-red">0</span></dt>
-    <dd>Has a known move date and hasn't moved since 90 days</dd>
-
-    <dt><img src="/js/images/marker-icon-grey.png"><span id="map-legend-grey">0</span></dt>
-    <dd>No known move date</dd>
-</dl>
+<div class="row">
+  <div class="col-md-6">
+    <h1>Legend</h1>
+    <dl id="map-legend">
+        <dt><img src="/js/images/marker-icon.png"><span id="map-legend-blue">0</span></dt>
+        <dd>Has moved since 90 days</dd>
+    
+        <dt><img src="/js/images/marker-icon-red.png"><span id="map-legend-red">0</span></dt>
+        <dd>Has a known move date and hasn't moved since 90 days</dd>
+    
+        <dt><img src="/js/images/marker-icon-grey.png"><span id="map-legend-grey">0</span></dt>
+        <dd>No known move date</dd>
+    </dl>
+  </div>
+  <div class="col-md-6">
+    <div>Results are limited to the first 500 responses.</div>
+    <div>Actual <span id="map-legend-total">0</span>/500</div>
+  </div>
+</div>

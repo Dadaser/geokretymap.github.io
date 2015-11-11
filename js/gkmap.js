@@ -7,6 +7,7 @@ var blue = 0;
 var red = 1;
 var grey = 2;
 var markersCounter = [0, 0, 0];
+var markersCounterTotal = 0;
 
 function initmap() {
   // set up the map
@@ -61,6 +62,7 @@ var greyIcon = new L.Icon({
 });
 
 function pointToLayer(feature, latlng) {
+  markersCounterTotal += 1;
   if (feature.properties && feature.properties.age) {
     if (feature.properties.age == 99999) {
       markersCounter[grey] += 1;
@@ -81,7 +83,9 @@ function updateCounters() {
   $("#map-legend-blue").html(markersCounter[blue]);
   $("#map-legend-red").html(markersCounter[red]);
   $("#map-legend-grey").html(markersCounter[grey]);
+  $("#map-legend-total").html(markersCounterTotal);
   markersCounter = [0, 0, 0];
+  markersCounterTotal = 0;
 }
 
 function onEachFeature(feature, layer) {
@@ -94,18 +98,23 @@ function onEachFeature(feature, layer) {
 function retrieve() {
   var bounds = map.getBounds();
   var filter="";
-  if (geokretyfilter.gkrecentinput.checked) {
-    filter += "&"+geokretyfilter.gkrecentinput.value
+
+  if ($("#geokrety_move_recent").prop('checked') == true) {
+    filter += "&newer"
   }
-  if (geokretyfilter.gkoldinput.checked) {
-    filter += "&"+geokretyfilter.gkoldinput.value
+  if ($("#geokrety_move_old").prop('checked') == true) {
+    filter += "&older"
   }
-  if (!geokretyfilter.gkghostsinput.checked) {
-    filter += "&"+geokretyfilter.gkghostsinput.value
+  if ($("#geokrety_move_ghosts").prop('checked') == false) {
+    filter += "&ghosts"
+  }
+  if ($("#geokrety_missing").prop('checked') == true) {
+    filter += "&missing"
   }
 
   var url="//api.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1"+filter;
 
+  map.spin(true, { scale: 2 });
   jQuery.ajax({
     dataType: "json",
     url: url,
@@ -120,8 +129,10 @@ function retrieve() {
       updateCounters();
       markers.addLayer(geoJsonLayer);
       map.addLayer(markers);
+      map.spin(false);
     },
     error: function(xhr){
+      map.spin(false);
       var err = eval("(" + xhr.responseText + ")");
       window.console.log(err.Message);
     }
@@ -132,6 +143,10 @@ function retrieve() {
 initmap();
 retrieve();
 
-map.on('moveend', function() {
+map.on('viewreset', function() {
+  retrieve();
+});
+
+map.on('dragend', function() {
   retrieve();
 });
