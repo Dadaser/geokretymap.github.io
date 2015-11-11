@@ -1,5 +1,10 @@
+html, body, .page-content, .wrapper {
+  height: 100%;
+}
+
 #map {
-  height: 500px;
+  padding-top: 100px;
+  height: 85%;
 }
 
 /**
@@ -57,67 +62,3 @@
   margin-right: auto;
   box-shadow: 5px 5px 5px #888888;
 }
-
-.leaflet-geokrety-layers {
-    background: #fff none repeat scroll 0 0;
-    border-radius: 5px;
-    box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4);
-}
-.leaflet-geokrety-layers-toggle {
-    background-image: url("images/layers.png");
-    height: 36px;
-    width: 36px;
-}
-
-.leaflet-control-layers-toggle {
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  display: block;
-  }
-
-
-/* geokrety control */
-
-.leaflet-control-geokrety {
-  box-shadow: 0 1px 5px rgba(0,0,0,0.4);
-  background: #fff;
-  border-radius: 5px;
-  }
-.leaflet-control-geokrety-toggle {
-  background-image: url(images/geokrety.png);
-  width: 36px;
-  height: 36px;
-  }
-.leaflet-retina .leaflet-control-geokrety-toggle {
-  background-image: url(images/geokrety-2x.png);
-  background-size: 26px 26px;
-  }
-.leaflet-touch .leaflet-control-geokrety-toggle {
-  width: 44px;
-  height: 44px;
-  }
-.leaflet-control-geokrety .leaflet-control-layers-list,
-.leaflet-control-geokrety-expanded .leaflet-control-layers-toggle {
-  display: none;
-  }
-.leaflet-control-geokrety-expanded .leaflet-control-layers-list {
-  display: block;
-  position: relative;
-  }
-.leaflet-control-geokrety-expanded {
-  padding: 6px 10px 6px 6px;
-  color: #333;
-  background: #fff;
-  }
-.leaflet-control-geokrety-selector {
-  margin-top: 2px;
-  position: relative;
-  top: 1px;
-  }
-.leaflet-control-geokrety label {
-  display: block;
-  }
-.leaflet-control-geokrety-separator {
-  height: 0;
-  border-top: 1px solid #ddd;
-  margin: 5px -10px 5px -6px
