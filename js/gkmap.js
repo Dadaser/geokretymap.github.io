@@ -34,6 +34,9 @@ function initmap() {
   // start the map at Paris
   map.setView(new L.LatLng(43.5943, 6.9509), 8);
   map.locate({setView: true, maxZoom: 16});
+
+  $("#map").height($(window).height()*0.85);
+  map.invalidateSize();
 }
 
 
