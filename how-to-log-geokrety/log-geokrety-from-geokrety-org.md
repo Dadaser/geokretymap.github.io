@@ -50,19 +50,12 @@ You’ll have to manually enter the exact coordinates of the cache. Copy / Paste
 ![alt text](/images/en/GeoKrety-tutorial_Step-3.2_GC-coordinates.png "Coordinates at GeoCaching.com")
 ![alt text](/images/en/GeoKrety-tutorial_Step-3.2_GK-coordinates.png "Coordinates at GeoKrety.com")
 
-f you are logged in on the site, your “name” is already filled, otherwise, enter your username.
+If you are logged in on the site, your “name” is already filled, otherwise, enter your username.
 
 Then the date and time of the movement.
 
 Add if you want a small message, it will still enjoy its owner!
 
-End
+## 4. End
 
 Finish by submitting the form.
-
-See also:
-
-* With c:geo, Android application
-* With Geokrety Logger, Android application
-* From geocaching.com
-
