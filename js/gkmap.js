@@ -61,15 +61,11 @@ function initmap() {
   });
 
   slider.noUiSlider.on('slide', function(){
-    $('#days-min').html(slider.noUiSlider.get()[0]);
-    $('#days-max').html(slider.noUiSlider.get()[1]);
-    $("#map").focus();
+    updateSlider(slider);
   });
 
   slider.noUiSlider.on('change', function(){
-    $('#days-min').html(slider.noUiSlider.get()[0]);
-    $('#days-max').html(slider.noUiSlider.get()[1]);
-    $("#map").focus();
+    updateSlider(slider);
     retrieve();
   });
 
@@ -86,10 +82,17 @@ function initmap() {
       origins[1].removeAttribute('disabled');
       slider.noUiSlider.set([null, savedMaxRange]);
     }
+    updateSlider(slider);
   });
 
   $("#map").height($(window).height()*0.85);
   map.invalidateSize();
+}
+
+function updateSlider(slider) {
+  $('#days-min').html(slider.noUiSlider.get()[0]);
+  $('#days-max').html(slider.noUiSlider.get()[1]);
+  $("#map").focus();
 }
 
 
