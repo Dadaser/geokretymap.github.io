@@ -77,9 +77,9 @@ function initmap() {
     if ($(this).prop('checked') == true) {
       savedMaxRange = slider.noUiSlider.get()[1];
       slider.noUiSlider.set([null, maxRange]);
-      origins[1].setAttribute('disabled', true);
+      //origins[1].setAttribute('disabled', true);
     } else {
-      origins[1].removeAttribute('disabled');
+      //origins[1].removeAttribute('disabled');
       slider.noUiSlider.set([null, savedMaxRange]);
     }
     updateSlider(slider);
@@ -92,6 +92,9 @@ function initmap() {
 function updateSlider(slider) {
   $('#days-min').html(slider.noUiSlider.get()[0]);
   $('#days-max').html(slider.noUiSlider.get()[1]);
+  if (slider.noUiSlider.get()[1] != maxRange) {
+    $('#geokrety_move_old').prop('checked', false);
+  }
   $("#map").focus();
 }
 
