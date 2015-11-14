@@ -11,10 +11,12 @@ L.Control.GeoKretyFilter = L.Control.extend({
   onAdd: function (map) {
     this._map = map;
     this._initLayout();    
-    this._addItem({ marker: 'geokrety_move_recent', name: 'Has moved since 3 months', checked: true});
-    this._addItem({ marker: 'geokrety_move_old', name: 'Has not moved since 3 months'});
-    this._addItem({ marker: 'geokrety_move_ghosts', name: 'In cache', statusList: true, checked: true});
-    this._addItem({ marker: 'geokrety_missing', name: 'Reported Missing', statusList: true});
+    this._addSlider();
+    //this._addItem({ marker: 'geokrety_move_recent', name: 'Has moved since 3 months', checked: true});
+    this._addItem({ marker: 'geokrety_move_old', name: 'GeoKrety moved more than 90 days ago'});
+    this._addItem({ marker: 'geokrety_move_ghosts', name: 'GeoKrety present in cache', statusList: true, checked: true});
+    this._addItem({ marker: 'geokrety_missing', name: 'GeoKrety reported as missing', statusList: true});
+    this._addItem({ marker: 'geokrety_no_move_date', name: 'GeoKrety with unknown move date'});
     return this._container;
   },
 
@@ -63,11 +65,20 @@ L.Control.GeoKretyFilter = L.Control.extend({
       this._expand();
     }
 
+    this.createTitle('Move age', form);
     this._gkLastMovesList = L.DomUtil.create('div', className + '-lastmoves', form);
     this._separator = L.DomUtil.create('div', className + '-separator', form);
+    this.createTitle('Status', form);
     this._gkStatusList = L.DomUtil.create('div', className + '-status', form);
 
     container.appendChild(form);
+  },
+
+  createTitle: function(title, obj) {
+    var h = document.createElement('h1');
+    var t = document.createTextNode(title);
+    h.appendChild(t);
+    obj.appendChild(h);
   },
 
   onRemove: function (map) {
@@ -75,6 +86,29 @@ L.Control.GeoKretyFilter = L.Control.extend({
     return;
   },
 
+
+  _addSlider: function (obj) {
+    var label = document.createElement('label');
+    var slider;
+
+    slider = document.createElement('div');
+    slider.id = 'geokrety_age_slider';
+
+    var name = document.createElement('span');
+    name.innerHTML = 'GeoKrety moved between <span id="days-min">0</span> to <span id="days-max">0</span> days ago';
+
+    // Helps from preventing layer control flicker when checkboxes are disabled
+    // https://github.com/Leaflet/Leaflet/issues/2771
+    var holder = document.createElement('div');
+
+    label.appendChild(holder);
+    holder.appendChild(name);
+    holder.appendChild(slider);
+
+    this._gkLastMovesList.appendChild(label);
+
+    return label;
+  },
 
   _addItem: function (obj) {
     var label = document.createElement('label');

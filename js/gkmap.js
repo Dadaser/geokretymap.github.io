@@ -9,6 +9,9 @@ var grey = 2;
 var markersCounter = [0, 0, 0];
 var markersCounterTotal = 0;
 
+var maxRange = 90;
+var savedMaxRange = 45;
+
 function initmap() {
   // set up the map
   map = new L.Map('map');
@@ -34,6 +37,56 @@ function initmap() {
   // start the map at Paris
   map.setView(new L.LatLng(43.5943, 6.9509), 8);
   map.locate({setView: true, maxZoom: 16});
+
+
+  var slider = document.getElementById('geokrety_age_slider');
+
+  noUiSlider.create(slider, {
+    start: [0, savedMaxRange],
+    connect: true,
+    //tooltips: true,
+    step: 1,
+    range: {
+      'min': 0,
+      'max': maxRange
+    },
+    format: {
+      to: function ( value ) {
+        return value;
+      },
+      from: function ( value ) {
+        return value;
+      }
+    }
+  });
+
+  slider.noUiSlider.on('slide', function(){
+    $('#days-min').html(slider.noUiSlider.get()[0]);
+    $('#days-max').html(slider.noUiSlider.get()[1]);
+    $("#map").focus();
+  });
+
+  slider.noUiSlider.on('change', function(){
+    $('#days-min').html(slider.noUiSlider.get()[0]);
+    $('#days-max').html(slider.noUiSlider.get()[1]);
+    $("#map").focus();
+    retrieve();
+  });
+
+  $('#days-min').html(slider.noUiSlider.get()[0]);
+  $('#days-max').html(slider.noUiSlider.get()[1]);
+
+  var origins = slider.getElementsByClassName('noUi-origin');
+  $('#geokrety_move_old').change(function() {
+    if ($(this).prop('checked') == true) {
+      savedMaxRange = slider.noUiSlider.get()[1];
+      slider.noUiSlider.set([null, maxRange]);
+      origins[1].setAttribute('disabled', true);
+    } else {
+      origins[1].removeAttribute('disabled');
+      slider.noUiSlider.set([null, savedMaxRange]);
+    }
+  });
 
   $("#map").height($(window).height()*0.85);
   map.invalidateSize();
@@ -102,11 +155,14 @@ function retrieve() {
   var bounds = map.getBounds();
   var filter="";
 
-  if ($("#geokrety_move_recent").prop('checked') == true) {
-    filter += "&newer"
-  }
+  //if ($("#geokrety_move_recent").prop('checked') == true) {
+  //  filter += "&newer"
+  //}
   if ($("#geokrety_move_old").prop('checked') == true) {
     filter += "&older"
+  }
+  if ($("#geokrety_no_move_date").prop('checked') == true) {
+    filter += "&nodate=1"
   }
   if ($("#geokrety_move_ghosts").prop('checked') == false) {
     filter += "&ghosts"
@@ -115,7 +171,10 @@ function retrieve() {
     filter += "&missing"
   }
 
-  var url="//api.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1"+filter;
+  filter += "&daysFrom=" + $('#days-min').html();
+  filter += "&daysTo="   + $('#days-max').html();
+
+  var url="https://api.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1"+filter;
 
   map.spin(true, { scale: 2 });
   jQuery.ajax({

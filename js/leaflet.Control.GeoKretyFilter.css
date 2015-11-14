@@ -8,6 +8,12 @@
 
 /* layers control */
 
+.leaflet-control-geokretyfilter h1 {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 10px;
+	}
+
 .leaflet-control-geokretyfilter {
 	box-shadow: 0 1px 5px rgba(0,0,0,0.4);
 	background: #fff;
@@ -50,7 +56,7 @@
 .leaflet-control-geokretyfilter-separator {
 	height: 0;
 	border-top: 1px solid #ddd;
-	margin: 5px -10px 5px -6px;
+	margin: 10px -10px 5px -6px;
 	}
 
 

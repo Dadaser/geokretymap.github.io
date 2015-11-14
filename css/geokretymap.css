@@ -57,3 +57,24 @@
   margin-right: auto;
   box-shadow: 5px 5px 5px #888888;
 }
+
+
+/**
+ * NoUislider
+ */
+.noUi-target {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
+.noUi-horizontal {
+  padding-right: 32px;
+}
+.noUi-horizontal .noUi-handle {
+  left: -1px;
+}
+.noUi-horizontal .noUi-origin  {
+  right: -32px;
+}
+
+
+
