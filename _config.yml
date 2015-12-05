@@ -11,6 +11,8 @@ github_username:  GeoKretyMap
 # Build settings
 markdown: kramdown
 
+redirects: yes
+
 
 navigation:
 - root: Root Menu Text
