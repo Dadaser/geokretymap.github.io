@@ -7,9 +7,9 @@ permalink: /how-to-log-geokrety/log-geokrety-from-geokrety-org/
 
 Even if it’s not mandatory to have an account on geokrety.org for logging GeoKrety, registration is highly recommended. It will ease drop / grab and will allow you to create new GeoKrety ! This account will be necessary if you plan to use [Geokrety Logger](https://play.google.com/store/apps/details?id=pl.nkg.geokrety) (Android application) or [c:geo](https://play.google.com/store/apps/details?id=cgeo.geocaching) (Android application).
 
-Register is quite simple, just fill in the [registration form](http://geokrety.org/adduser.php).
+Register is quite simple, just fill in the [registration form](https://geokrety.org/adduser.php).
 
-A last recommended step, is to specify your [home coordinates](http://geokrety.org/edit.php?co=latlon).
+A last recommended step, is to specify your [home coordinates](https://geokrety.org/edit.php?co=latlon).
 
 
 # Log a move

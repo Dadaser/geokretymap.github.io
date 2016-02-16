@@ -19,7 +19,7 @@ You can install [c:geo](http://cgeo.org) from :
 
 **Consulting the objects do not require authentication or configuration on your side.** If an object is in a cache, and you have an internet connection, they appear in the inventory tab.
 
-**To log a move, you must have an account** on the [geokrety.org](http://geokrety.org) site (if this is not the case, you will need to [create one](https://geokrety.org/adduser.php)).
+**To log a move, you must have an account** on the [geokrety.org](https://geokrety.org) site (if this is not the case, you will need to [create one](https://geokrety.org/adduser.php)).
 
 # Configuration
 

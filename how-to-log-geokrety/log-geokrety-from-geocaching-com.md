@@ -20,7 +20,7 @@ Restart your navigator if asked.
 
 ## 2. Installation of << GeoKrety Toolbox >> script
 
-* Install the script [geokrety-toolbox](http://geokrety.org/download/GeoKrety.Toolbox.user.js).
+* Install the script [geokrety-toolbox](https://geokrety.org/download/GeoKrety.Toolbox.user.js).
 * Then accept the installation.
 
 # Usage
