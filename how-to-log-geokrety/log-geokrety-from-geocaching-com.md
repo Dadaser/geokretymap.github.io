@@ -9,7 +9,7 @@ However, it is possible to add the functionnality, using extending script (compa
 
 # Prerequisite, installation of << Extension >>
 
-Note: If you use Chrome, simply install [GeoKrety-Toolbox](https://chrome.google.com/webstore/detail/geokrety-toolbox/ldbheajkebdflbjdckojokbfdndkahnl) extension.
+Note: If you use Chrome, simply install [GeoKrety-Toolbox](https://chrome.google.com/webstore/detail/geokrety-toolbox/ldbheajkebdflbjdckojokbfdndkahnl?hl=en-US) extension.
 
 ## 1. Installation of << Greasemonkey / Tampermonkey >>
 
@@ -20,9 +20,7 @@ Restart your navigator if asked.
 
 ## 2. Installation of << GeoKrety Toolbox >> script
 
-* go to the [geokrety-toolbox](http://userscripts-mirror.org/scripts/show/59670.html) page (local copy)
-* Clic on the << Install >> button on the top right.
-![GeoKrety Toolbox Install Button at userscripts-mirror.org](/images/en/GeoKrety-tutorial_geocaching-com_GeoKrety-Toolbox_Install-Button.png "GeoKrety Toolbox Install Button at userscripts-mirror.org")
+* Install the script [geokrety-toolbox](http://geokrety.org/download/GeoKrety.Toolbox.user.js).
 * Then accept the installation.
 
 # Usage
