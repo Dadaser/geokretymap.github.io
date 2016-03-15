@@ -1,6 +1,9 @@
 var map;
 var geoJsonLayer;
-var markers = L.markerClusterGroup({maxClusterRadius: 40, disableClusteringAtZoom: 8});
+var markers = L.markerClusterGroup({
+  maxClusterRadius: 40,
+  spiderfyOnMaxZoom: true
+});
 var geokretyfilter = new L.control.geokretyfilter({"data": undefined}, undefined);
 
 var blue = 0;
