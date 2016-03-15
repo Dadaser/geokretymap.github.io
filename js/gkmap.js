@@ -9,12 +9,20 @@ var grey = 2;
 var markersCounter = [0, 0, 0];
 var markersCounterTotal = 0;
 
+var initial_position = new L.LatLng(43.5943, 6.9509);
+var initial_zoom = 8;
+
 var maxRange = 90;
 var savedMaxRange = 45;
+
+var slider = undefined;
 
 function initmap() {
   // set up the map
   map = new L.Map('map');
+
+  // Hash link
+  //var hash = new L.Hash(map, {zoom: 8, center: [43.5943, 6.9509]});
 
   // create the tile layer with correct attribution
   var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -30,16 +38,14 @@ function initmap() {
 
   // Filter plugin
   map.addControl(geokretyfilter);
+  slider = document.getElementById('geokrety_age_slider');
 
   // Fullscreen plugin
   map.addControl(L.control.fullscreen());
 
-  // start the map at Paris
-  map.setView(new L.LatLng(43.5943, 6.9509), 8);
+  // Ask to locate by browser
   map.locate({setView: true, maxZoom: 16});
 
-
-  var slider = document.getElementById('geokrety_age_slider');
 
   noUiSlider.create(slider, {
     start: [0, savedMaxRange],
@@ -69,13 +75,17 @@ function initmap() {
     retrieve();
   });
 
+  // Read urls parameters
+  readUrl();
+
   $('#days-min').html(slider.noUiSlider.get()[0]);
   $('#days-max').html(slider.noUiSlider.get()[1]);
 
-  var origins = slider.getElementsByClassName('noUi-origin');
+  //var origins = slider.getElementsByClassName('noUi-origin');
   $('#geokrety_move_old').change(function() {
     if ($(this).prop('checked') == true) {
       savedMaxRange = slider.noUiSlider.get()[1];
+  console.log(slider);
       slider.noUiSlider.set([null, maxRange]);
       //origins[1].setAttribute('disabled', true);
     } else {
@@ -182,6 +192,8 @@ function retrieve() {
 
   var url="https://api.geokretymap.org/export2.php?latTL="+bounds.getNorth()+"&lonTL="+bounds.getEast()+"&latBR="+bounds.getSouth()+"&lonBR="+bounds.getWest()+"&limit=500&json=1"+filter;
 
+  writeUrl();
+
   map.spin(true, { scale: 2 });
   jQuery.ajax({
     dataType: "json",
@@ -218,3 +230,73 @@ map.on('viewreset', function() {
 map.on('dragend', function() {
   retrieve();
 });
+
+
+function writeUrl() {
+  params = "#";
+  params += map.getZoom();
+  params += "/";
+  params += map.getCenter().lat;
+  params += "/";
+  params += map.getCenter().lng;
+  params += "/";
+
+  if ($("#geokrety_move_old").prop('checked') == true) {
+    params += "1/"
+  } else {
+    params += "0/"
+  }
+  if ($("#geokrety_no_move_date").prop('checked') == true) {
+    params += "1/"
+  } else {
+    params += "0/"
+  }
+  if ($("#geokrety_move_ghosts").prop('checked') == true) {
+    params += "1/"
+  } else {
+    params += "0/"
+  }
+  if ($("#geokrety_missing").prop('checked') == true) {
+    params += "1/"
+  } else {
+    params += "0/"
+  }
+
+  params += $('#days-min').html() + "/";
+  params += $('#days-max').html();
+
+
+  location.replace(params);
+}
+
+function readUrl() {
+  var hash = location.hash;
+  if (hash.indexOf('#') === 0) {
+    hash = hash.substr(1);
+  }
+  var args = hash.split("/");
+  if (args.length == 9) {
+    var zoom     = parseInt(args[0], 10),
+        lat      = parseFloat(args[1]),
+        lon      = parseFloat(args[2]),
+        move_old = parseFloat(args[3]),
+        move_no  = parseFloat(args[4]),
+        ghost    = parseFloat(args[5]),
+        missing  = parseFloat(args[6]);
+    if (isNaN(zoom) || isNaN(lat) || isNaN(lon) || isNaN(move_old) || isNaN(move_no) || isNaN(ghost) || isNaN(missing)) {
+      //return false;
+      map.setView(initial_position, initial_zoom);
+    } else {
+      map.setView(new L.LatLng(lat, lon), zoom);
+      $("#geokrety_move_old").prop('checked', move_old);
+      $("#geokrety_no_move_date").prop('checked', move_no);
+      $("#geokrety_move_ghosts").prop('checked', ghost);
+      $("#geokrety_missing").prop('checked', missing);
+      if (move_old) { slider.noUiSlider.set([null, maxRange]); }
+    }
+  } else {
+    map.setView(initial_position, initial_zoom);
+  }
+}
+
+
