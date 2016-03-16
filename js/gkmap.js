@@ -46,9 +46,6 @@ function initmap() {
   // Fullscreen plugin
   map.addControl(L.control.fullscreen());
 
-  // Ask to locate by browser
-  map.locate({setView: true, maxZoom: 16});
-
 
   noUiSlider.create(slider, {
     start: [0, savedMaxRange],
@@ -287,8 +284,9 @@ function readUrl() {
         ghost    = parseFloat(args[5]),
         missing  = parseFloat(args[6]);
     if (isNaN(zoom) || isNaN(lat) || isNaN(lon) || isNaN(move_old) || isNaN(move_no) || isNaN(ghost) || isNaN(missing)) {
-      //return false;
       map.setView(initial_position, initial_zoom);
+      // Ask to locate by browser
+      map.locate({setView: true, maxZoom: 16});
     } else {
       map.setView(new L.LatLng(lat, lon), zoom);
       $("#geokrety_move_old").prop('checked', move_old);
@@ -299,6 +297,8 @@ function readUrl() {
     }
   } else {
     map.setView(initial_position, initial_zoom);
+    // Ask to locate by browser
+    map.locate({setView: true, maxZoom: 16});
   }
 }
 
