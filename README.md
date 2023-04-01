@@ -1,0 +1,1 @@
+# geokretymap.github.io
